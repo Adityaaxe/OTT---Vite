@@ -63,10 +63,10 @@ const Carousel = () => {
 
               {/* Buttons */}
               <div className="mt-6 flex gap-4">
-                <button className="bg-white text-black px-6 py-2 rounded-lg flex items-center gap-2">
+                <button className="bg-white text-black px-6 py-2 rounded-full flex items-center gap-2 glow">
                   <FaPlay /> Play
                 </button>
-                <button className="bg-gray-700 px-6 py-2 rounded-lg flex items-center gap-2">
+                <button className="bg-gray-700 px-6 py-2 rounded-full flex items-center gap-2">
                   <FaPlus /> Watchlist
                 </button>
               </div>
