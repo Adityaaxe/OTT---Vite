@@ -9,9 +9,9 @@ const Navbar = () => {
   return (
     <nav className="bg-gray-900 text-white px-6 py-4 flex justify-between items-center">
       {/* Left Side - Logo */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1 cursor-pointer" onClick={() => navigate("/")}>
         <img src={logo} alt="Logo" className="w-10 h-10" />
-        <h1 className="text-xl font-bold">Anime Sekai</h1>
+        <h1 className="text-xl font-bold">Orbstar</h1>
       </div>
 
       {/* Center - Menu Links */}
@@ -28,7 +28,7 @@ const Navbar = () => {
           <input type="text" placeholder="Search" className="bg-transparent outline-none text-white" />
         </div>
         <button 
-          className="bg-white text-black px-4 py-2 rounded-full flex items-center gap-2"
+          className="bg-white text-black px-4 py-2 rounded-full flex items-center gap-2 cursor-pointer"
           onClick={() => navigate("/login")}
         >
           <FaUser />

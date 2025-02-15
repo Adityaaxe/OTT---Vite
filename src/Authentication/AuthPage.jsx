@@ -5,7 +5,7 @@ const AuthPage = () => {
 
   return (
     <div className='flex h-screen items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white'>
-      <div className='w-full max-w-md bg-gray-800 p-8 rounded-2xl shadow-lg text-center'>
+      <div className='w-full max-w-md bg-white/5 bg-opacity-2 p-8 rounded-3xl text-center z-9 shadow-lg backdrop-blur-xl'>
         <h2 className='text-3xl font-bold mb-4'>
           {isLogin ? "Login" : "Sign Up"}
         </h2>
