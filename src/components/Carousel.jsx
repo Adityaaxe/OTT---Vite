@@ -1,32 +1,29 @@
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { FaPlay, FaPlus, FaUsers } from "react-icons/fa";
-
-const slides = [
-  {
-    title: "Black Clover",
-    description: "Set in a world where people are born with the ability to use magic, the story follows Asta, a young boy without any magic power...",
-    img: "https://wallpaperaccess.com/full/1706166.jpg",
-    views: "24M",
-  },
-  {
-    title: "Attack on Titan",
-    description: "In a world where giant humanoid Titans prey on humans, Eren joins the elite Survey Corps to battle them...",
-    img: "https://wallpaperaccess.com/full/3664180.jpg",
-    views: "50M",
-  },
-  {
-    title: "Demon Slayer",
-    description: "A young boy joins the Demon Slayer Corps to avenge his family and cure his sister who has turned into a demon...",
-    img: "https://wallpaperaccess.com/full/2159305.jpg",
-    views: "30M",
-  },
-];
+import { FaPlay, FaPlus } from "react-icons/fa";
+import axios from "axios";
 
 const Carousel = () => {
+  const [slides, setSlides] = useState([]); // Store API data
+
+  // Fetch carousel data from backend
+  useEffect(() => {
+    const fetchCarouselData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/carousel"); // Fetch from backend
+        setSlides(response.data);
+      } catch (error) {
+        console.error("Error fetching carousel data:", error);
+      }
+    };
+
+    fetchCarouselData();
+  }, []);
+
   return (
     <Swiper
       modules={[Navigation, Pagination, Autoplay]}
@@ -55,12 +52,6 @@ const Carousel = () => {
               <h2 className="text-4xl font-bold">{slide.title}</h2>
               <p className="mt-2 text-gray-300">{slide.description}</p>
 
-              {/* Stats */}
-              <div className="flex items-center gap-4 mt-4 text-gray-300">
-                <FaUsers />
-                <span>{slide.views}</span>
-              </div>
-
               {/* Buttons */}
               <div className="mt-6 flex gap-4">
                 <button className="bg-white text-black px-6 py-2 rounded-full flex items-center gap-2 glow">
@@ -79,4 +70,3 @@ const Carousel = () => {
 };
 
 export default Carousel;
-

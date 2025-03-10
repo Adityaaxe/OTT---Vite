@@ -17,11 +17,11 @@ const CountryCardScroller = () => {
   ];
 
   return (
-    <div className="overflow-x-auto scroll-smooth py-4 px-4">
+    <div className="overflow-x-auto scroll-smooth py-4 px-4 no-scrollbar ">
       <div className="flex space-x-4 flex-nowrap">
         {countries.map((country, index) => (
           <div key={index} className="flex-shrink-0">
-            <div className="w-60 h-32 bg-gray-800 rounded-xl shadow-md overflow-hidden">
+            <div className="w-60 h-32 bg-gray-800 rounded-xl shadow-md overflow-hidden ">
               <img
                 src={country.image}
                 alt={country.name}

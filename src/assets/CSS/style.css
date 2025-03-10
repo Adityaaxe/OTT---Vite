@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 /* Hide the horizontal scrollbar */
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
+.scroll-smooth ::-webkit-scrollbar { 
+  width: 15px; 
+  border: 2px solid blue; 
+} 
   
   .no-scrollbar {
     scrollbar-width: none;
