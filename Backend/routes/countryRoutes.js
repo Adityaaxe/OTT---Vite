@@ -1,32 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const Country = require("../models/Country");
+const { getCountriesList , getCountryByName } = require("../controllers/countryController"); 
+const { getCarouselData } = require("../controllers/carouselController");
+const { getContentDetails } = require("../controllers/contentController")
 
-// 📌 Fetch titles, descriptions, and images for the carousel
-router.get("/carousel", async (req, res) => {
-  try {
-    const countries = await Country.find(); // Fetch all countries
+// 📌 Route to fetch carousel data (titles, descriptions, images)
+router.get("/carousel", getCarouselData);
 
-    let carouselData = [];
+// 📌 Route to fetch only country names and images
+router.get("/countries-list", getCountriesList);
+router.get("/countries/:name", getCountryByName);
 
-    // Extract relevant data from each country
-    countries.forEach((country) => {
-      country.genres.forEach((genre) => {
-        genre.contents.forEach((content) => {
-          carouselData.push({
-            title: content.title,
-            description: content.description,
-            img: content.imageUrl, // Assuming imageUrl is stored correctly
-          });
-        });
-      });
-    });
-
-    res.json(carouselData);
-  } catch (error) {
-    console.error("Error fetching carousel data:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
+// 📌 Route to fetch content details for Player Page
+router.get("/countries/:countryName/:genreName/:contentTitle", getContentDetails);
 
 module.exports = router;
