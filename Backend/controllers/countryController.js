@@ -11,13 +11,13 @@ const getCountriesList = async (req, res) => {
   }
 };
 
-// 📌 Fetch a specific country by name
+// Fetch a specific country and its genres
 const getCountryByName = async (req, res) => {
   try {
-    const country = await Country.findOne({ name: req.params.name });
+    const country = await Country.findOne({ name: { $regex: new RegExp(`^${req.params.name}$`, "i") } }).lean();
 
     if (!country) {
-      return res.status(404).json({ message: "Country notddw found" });
+      return res.status(404).json({ message: "Country not found" });
     }
 
     res.json(country);

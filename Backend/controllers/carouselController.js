@@ -8,13 +8,16 @@ const getCarouselData = async (req, res) => {
 
     countries.forEach((country) => {
       country.genres.forEach((genre) => {
-        genre.contents.forEach((content) => {
-          carouselData.push({
-            countryName: country.name,
-            genreName: genre.name,
-            title: content.title,
-            description: content.description,
-            img: content.imageUrl, 
+        genre.contentTypes.forEach((contentType) => {  // ✅ Include contentType
+          contentType.contents.forEach((content) => {  // ✅ Iterate over contents
+            carouselData.push({
+              countryName: country.name,
+              genreName: genre.name,
+              contentType: contentType.type, // ✅ Include content type (Movie, TV, etc.)
+              title: content.title,
+              description: content.description,
+              img: content.imageUrl, 
+            });
           });
         });
       });
