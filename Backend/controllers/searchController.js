@@ -36,3 +36,5 @@ const searchContent = async (req, res) => {
 };
 
 module.exports = { searchContent };
+
+

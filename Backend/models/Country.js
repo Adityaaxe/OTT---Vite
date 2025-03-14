@@ -1,30 +1,53 @@
 const mongoose = require("mongoose");
 
-// Define the content schema (for individual movies, TV shows, etc.)
-const contentSchema = new mongoose.Schema({
+const episodeSchema = new mongoose.Schema({
   title: String,
-  description: String,
-  releaseYear: Number,
-  imageUrl: String,
+  episodeNumber: Number,
+  duration: String,
+  releaseDate: String,
   videoUrl: String,
 });
 
-// Define the content type schema (Movies, TV Shows, Anime, etc.)
+const seasonSchema = new mongoose.Schema({
+  seasonNumber: Number,
+  releaseYear: Number,
+  episodes: [episodeSchema],
+});
+
+const moviePartSchema = new mongoose.Schema({
+  title: String,
+  partNumber: Number,
+  releaseYear: Number,
+  duration: String,
+  videoUrl: String,
+});
+
+const contentSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  posterImage: String, // ✅ Added field for poster image
+  cardImage: String,   // ✅ Added field for card image
+  isCarousel: Boolean, // ✅ Added field to control carousel content
+  type: { type: String, enum: ["series", "movie"] },
+  seasons: [seasonSchema], // Only for series
+  movieParts: [moviePartSchema], // Only for movies
+});
+
 const contentTypeSchema = new mongoose.Schema({
-  type: { type: String, required: true }, // e.g., "Movies", "TV Shows", "Anime Movies", "Anime Series"
-  contents: [contentSchema], // Array of content under this type
+  type: { type: String, enum: ["TV Shows", "Movies", "Anime Series", "Anime Movies"] },
+  contents: [contentSchema],
 });
 
-// Define the genre schema (Action, Drama, etc.)
 const genreSchema = new mongoose.Schema({
-  name: String, // Genre name (e.g., Action, Comedy, Drama)
-  contentTypes: [contentTypeSchema], // Each genre has different types of content
+  name: String,
+  image: String, // ✅ Added field for genre image
+  contentTypes: [contentTypeSchema],
 });
 
-// Define the country schema (Pakistan, India, etc.)
 const countrySchema = new mongoose.Schema({
-  name: { type: String, required: true }, // Country name
-  genres: [genreSchema], // Each country has multiple genres
+  name: String,
+  image: String, // ✅ Added field for country image
+  genres: [genreSchema],
 });
 
 const Country = mongoose.model("Country", countrySchema);
