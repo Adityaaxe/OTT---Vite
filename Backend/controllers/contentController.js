@@ -1,4 +1,4 @@
-const Country = require("../models/Country"); // Import Country model
+const Country = require("../models/Movie"); // Import Country model
 
 // Fetch specific content based on country, genre, and title
 const getContent = async (req, res) => {

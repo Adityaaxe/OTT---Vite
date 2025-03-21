@@ -1,4 +1,4 @@
-const Country = require("../models/Country"); // ✅ Import the Country model
+const Country = require("../models/Movie"); // ✅ Import the Country model
 
 // 📌 Fetch only Anime Series from the database
 const getAllAnimeSeries = async (req, res) => {

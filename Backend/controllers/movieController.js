@@ -1,4 +1,4 @@
-const Country = require("../models/Country"); // ✅ Import the Country model
+const Country = require("../models/Movie"); // ✅ Import the Country model
 
 // 📌 Fetch only movies from the database
 const getAllMovies = async (req, res) => {

@@ -1,32 +1,23 @@
-const Country = require("../models/Country"); // ✅ Import the Country model
+const Movie = require("../models/Movie"); // ✅ Import the Movie model
 
 // 📌 Fetch carousel data (Limit to 10 slides)
 const getCarouselData = async (req, res) => {
   try {
-    const countries = await Country.find();
-    let carouselData = [];
+    // ✅ Find only movies where `isCarousel` is `true`
+    const carouselData = await Movie.find({ isCarousel: true })
+      .select("title overview genres posterImage cardImage") // ✅ Fetch only required fields
+      .limit(10); // ✅ Limit to 10 items
 
-    countries.forEach((country) => {
-      country.genres.forEach((genre) => {
-        genre.contentTypes.forEach((contentType) => {
-          contentType.contents.forEach((content) => {
-            if (content.isCarousel) { // ✅ Filter only carousel items
-              carouselData.push({
-                countryName: country.name,
-                genreName: genre.name,
-                title: content.title,
-                description: content.description,
-                posterImage: content.posterImage,
-                cardImage: content.cardImage,
-              });
-            }
-          });
-        });
-      });
-    });
+    // ✅ Fix overview formatting (Convert array to string)
+    const formattedCarouselData = carouselData.map((movie) => ({
+      title: movie.title,
+      overview: Array.isArray(movie.overview) ? movie.overview.join(" ") : String(movie.overview),
+      genres: movie.genres,
+      posterImage: movie.posterImage,
+      cardImage: movie.cardImage,
+    }));
 
-    // ✅ Return only the first 10 items
-    res.json(carouselData.slice(0, 10));
+    res.json(formattedCarouselData);
   } catch (error) {
     console.error("Error fetching carousel data:", error);
     res.status(500).json({ message: "Server error" });
