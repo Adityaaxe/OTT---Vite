@@ -1,17 +1,22 @@
-const Movie = require("../models/Movie"); // ✅ Import the Movie model
+const Movie = require("../models/Movie");
 
-// 📌 Fetch carousel data (Limit to 10 slides)
 const getCarouselData = async (req, res) => {
   try {
-    // ✅ Find only movies where `isCarousel` is `true`
     const carouselData = await Movie.find({ isCarousel: true })
-      .select("title overview genres posterImage cardImage") // ✅ Fetch only required fields
-      .limit(10); // ✅ Limit to 10 items
+      .select("title overview genres posterImage cardImage")
+      .limit(10);
 
-    // ✅ Fix overview formatting (Convert array to string)
     const formattedCarouselData = carouselData.map((movie) => ({
       title: movie.title,
-      overview: Array.isArray(movie.overview) ? movie.overview.join(" ") : String(movie.overview),
+      overview: Array.isArray(movie.overview) 
+        ? movie.overview.join(" ")
+          .replace(/^\[|\]$/g, '')  // Remove square brackets at start and end
+          .replace(/[,']/g, '')     // Remove commas and single quotes
+          .replace(/â€™/g, "'")     // Replace problematic encoding with standard apostrophe
+        : String(movie.overview)
+          .replace(/^\[|\]$/g, '')  // Remove square brackets at start and end
+          .replace(/[,']/g, '')     // Remove commas and single quotes
+          .replace(/â€™/g, "'"),    // Replace problematic encoding with standard apostrophe
       genres: movie.genres,
       posterImage: movie.posterImage,
       cardImage: movie.cardImage,

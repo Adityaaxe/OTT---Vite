@@ -1,46 +1,23 @@
 const Movie = require("../models/Movie");
 
-// 📌 Fetch unique country names from production_countries[0]
+// 📌 Fetch all unique country names from production_countries array
 const getCountriesList = async (req, res) => {
   try {
-    const movies = await Movie.find({}, "production_countries posterImage cardImage");
+    const movies = await Movie.find({}, "production_countries").lean();
 
-    // Extract the first country from production_countries and remove duplicates
-    const countryMap = new Map();
-    movies.forEach(movie => {
-      const countryName = movie.production_countries?.[0] || "Unknown";
-      if (countryName !== "Unknown" && !countryMap.has(countryName)) {
-        countryMap.set(countryName, {
-          name: countryName,
-          imageUrl: movie.posterImage || movie.cardImage || "" // Use any available image
-        });
-      }
-    });
+    // Extract all unique country names from production_countries array
+    const uniqueCountries = [
+      ...new Set(movies.flatMap(movie => movie.production_countries).filter(Boolean))
+    ];
 
-    res.json([...countryMap.values()]);
+    // Convert unique country names into an array of objects for the frontend
+    const countryList = uniqueCountries.map(country => ({ name: country }));
+
+    res.json(countryList);
   } catch (error) {
     console.error("Error fetching country list:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-// 📌 Fetch movies by country (matching production_countries[0])
-const getCountryByName = async (req, res) => {
-  try {
-    const countryName = req.params.name;
-
-    // Find movies where production_countries[0] matches the given country
-    const movies = await Movie.find({ "production_countries.0": countryName }).lean();
-
-    if (!movies.length) {
-      return res.status(404).json({ message: "Country not found" });
-    }
-
-    res.json(movies);
-  } catch (error) {
-    console.error("Error fetching country:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-};
-
-module.exports = { getCountriesList, getCountryByName };
+module.exports = { getCountriesList };

@@ -1,4 +1,4 @@
-const Country = require("../models/Movie"); // ✅ Import the Country model
+const Movie = require("../models/Movie"); // ✅ Import the Movie model
 
 // 📌 Search content from database
 const searchContent = async (req, res) => {
@@ -8,27 +8,18 @@ const searchContent = async (req, res) => {
       return res.status(400).json({ message: "Search query is required" });
     }
 
-    const countries = await Country.find();
-    let searchResults = [];
+    // ✅ Case-insensitive search on title field
+    const searchResults = await Movie.find({
+      title: { $regex: query, $options: "i" },
+    }).select("title genres cardImage");
 
-    countries.forEach((country) => {
-      country.genres.forEach((genre) => {
-        genre.contentTypes.forEach((contentType) => {
-          contentType.contents.forEach((content) => {
-            if (content.title.toLowerCase().includes(query.toLowerCase())) { // ✅ Case-insensitive search
-              searchResults.push({
-                countryName: country.name,
-                genreName: genre.name,
-                title: content.title,
-                img: content.imageUrl,
-              });
-            }
-          });
-        });
-      });
-    });
-
-    res.json(searchResults);
+    res.json(
+      searchResults.map((movie) => ({
+        title: movie.title,
+        genre: movie.genres?.[0] || "Unknown", // ✅ Show first genre if available
+        img: movie.cardImage || "https://via.placeholder.com/100", // ✅ Default image
+      }))
+    );
   } catch (error) {
     console.error("Error fetching search results:", error);
     res.status(500).json({ message: "Server error" });
@@ -36,5 +27,3 @@ const searchContent = async (req, res) => {
 };
 
 module.exports = { searchContent };
-
-
