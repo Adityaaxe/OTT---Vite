@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Country = require("./models/Country"); // Import the Country model
+const Country = require("./models/Movie"); // Import the Country model
 
 // Connect to MongoDB
 mongoose.connect("mongodb+srv://adityadikhit:gWxS7GeN8QFOkFo1@clusterott.nesg9.mongodb.net/combinedott", {

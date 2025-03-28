@@ -2,24 +2,25 @@ const Movie = require("../models/Movie");
 
 const getCarouselData = async (req, res) => {
   try {
-    const carouselData = await Movie.find({ isCarousel: true })
-      .select("title overview genres posterImage cardImage")
+    const carouselData = await Movie.find({ isCarousel: false })
+      .select("_id title overview genres Posterimg Cardimg")
       .limit(10);
 
     const formattedCarouselData = carouselData.map((movie) => ({
+      _id: movie._id.toString(), // Include _id
       title: movie.title,
-      overview: Array.isArray(movie.overview) 
+      overview: Array.isArray(movie.overview)
         ? movie.overview.join(" ")
-          .replace(/^\[|\]$/g, '')  // Remove square brackets at start and end
-          .replace(/[,']/g, '')     // Remove commas and single quotes
-          .replace(/â€™/g, "'")     // Replace problematic encoding with standard apostrophe
+          .replace(/^\[|\]$/g, '')
+          .replace(/[,']/g, '')
+          .replace(/â€™/g, "'")
         : String(movie.overview)
-          .replace(/^\[|\]$/g, '')  // Remove square brackets at start and end
-          .replace(/[,']/g, '')     // Remove commas and single quotes
-          .replace(/â€™/g, "'"),    // Replace problematic encoding with standard apostrophe
+          .replace(/^\[|\]$/g, '')
+          .replace(/[,']/g, '')
+          .replace(/â€™/g, "'"),
       genres: movie.genres,
-      posterImage: movie.posterImage,
-      cardImage: movie.cardImage,
+      posterImage: movie.Posterimg || movie.Cardimg,
+      cardImage: movie.Cardimg || movie.Posterimg,
     }));
 
     res.json(formattedCarouselData);

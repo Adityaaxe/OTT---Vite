@@ -1,6 +1,5 @@
-const Movie = require("../models/Movie"); // ✅ Import the Movie model
+const Movie = require("../models/Movie");
 
-// 📌 Search content from database
 const searchContent = async (req, res) => {
   try {
     const query = req.query.query;
@@ -8,17 +7,19 @@ const searchContent = async (req, res) => {
       return res.status(400).json({ message: "Search query is required" });
     }
 
-    // ✅ Case-insensitive search on title field
+    // Case-insensitive search on title field
     const searchResults = await Movie.find({
       title: { $regex: query, $options: "i" },
-    }).select("title genres cardImage");
+    }).select("id title genres Cardimg Posterimg VideoURL");
 
     res.json(
       searchResults.map((movie) => ({
+        id: movie._id, // Ensure id is the first property
         title: movie.title,
-        genre: movie.genres?.[0] || "Unknown", // ✅ Show first genre if available
-        img: movie.cardImage || "https://via.placeholder.com/100", // ✅ Default image
-      }))
+        genre: movie.genres?.[0] || "Unknown",
+        img: movie.Cardimg || movie.Posterimg || "https://via.placeholder.com/100",
+        videoUrl: movie.VideoURL
+      })).filter(result => result.id) // Filter out any results without an ID
     );
   } catch (error) {
     console.error("Error fetching search results:", error);

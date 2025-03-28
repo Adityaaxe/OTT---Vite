@@ -12,9 +12,10 @@ const movieSchema = new mongoose.Schema({
   cast: [{ type: String }],
   directors: [{ type: String }],
   writers: [{ type: String }],
-  posterImage: { type: String, required: false }, // ✅ Make sure it's not required if empty values exist
-  cardImage: { type: String, required: false }, // ✅ Same here
-  isCarousel: { type: Boolean, default: false }
+  Posterimg: { type: String, required: false }, // ✅ Make sure it's not required if empty values exist
+  Cardimg: { type: String, required: false }, // ✅ Same here
+  isCarousel: { type: Boolean, default: false },
+  VideoURL: { type: String, required: false }
 });
 
 const Movie = mongoose.model("Movie", movieSchema);
