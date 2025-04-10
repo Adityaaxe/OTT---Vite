@@ -8,7 +8,7 @@ const AnimeMoviesCardScroller = () => {
   useEffect(() => {
     const fetchAnimeMovies = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/animemovies"); // ✅ Fetch anime movies from backend
+        const response = await axios.get("https://uniconott.onrender.com/api/animemovies"); // ✅ Fetch anime movies from backend
         setAnimeMovies(response.data);
       } catch (error) {
         console.error("Error fetching anime movies data:", error);

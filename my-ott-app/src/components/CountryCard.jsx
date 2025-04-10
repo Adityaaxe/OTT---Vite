@@ -9,7 +9,7 @@ const CountryCardScroller = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/countries-list");
+        const response = await axios.get("https://uniconott.onrender.com/api/countries-list");
         // Filter out any empty or undefined country names
         const validCountries = response.data.filter(country => 
           country.name && country.name.trim() !== ''

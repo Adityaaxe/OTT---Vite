@@ -13,7 +13,7 @@ const WatchlistCardScroller = () => {
         if (!user?.id) return;
 
         const response = await axios.get(
-          `http://localhost:5000/api/user/watchlist-content/${user.id}`
+          `https://uniconott.onrender.com/api/user/watchlist-content/${user.id}`
         );
         setWatchlistMovies(response.data);
       } catch (error) {

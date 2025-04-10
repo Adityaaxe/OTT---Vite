@@ -16,7 +16,7 @@ const PlayerPage = ({ fallback }) => {
 
     const fetchContent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/movies/${id}`);
+        const response = await axios.get(`https://uniconott.onrender.com/api/movies/${id}`);
         setContent(response.data);
       } catch (error) {
         console.error("Error fetching content:", error);

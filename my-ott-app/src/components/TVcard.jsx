@@ -8,7 +8,7 @@ const TVShowCardScroller = () => {
   useEffect(() => {
     const fetchTVShows = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/tvshows"); // ✅ Fetch only TV shows
+        const response = await axios.get("https://uniconott.onrender.com/api/tvshows"); // ✅ Fetch only TV shows
         setTVShows(response.data);
       } catch (error) {
         console.error("Error fetching TV show data:", error);

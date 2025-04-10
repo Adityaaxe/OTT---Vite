@@ -17,7 +17,7 @@ const Carousel = () => {
   useEffect(() => {
     const fetchCarouselData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/carousel");
+        const response = await axios.get("https://uniconott.onrender.com/api/carousel");
         setSlides(response.data);
       } catch (error) {
         console.error("Error fetching carousel data:", error);
@@ -28,7 +28,7 @@ const Carousel = () => {
       if (!user?.id) return;
       
       try {
-        const res = await axios.get(`http://localhost:5000/api/user/watchlist/${user.id}`);
+        const res = await axios.get(`https://uniconott.onrender.com/api/user/watchlist/${user.id}`);
         console.log("Watchlist response:", res.data);
         setWatchlist(res.data || []);
       } catch (err) {
@@ -53,7 +53,7 @@ const Carousel = () => {
       
       if (isInWatchlist) {
         console.log("Removing from watchlist:", { clerkId: user.id, movieId: contentId });
-        await axios.post(`http://localhost:5000/api/user/watchlist/remove`, {
+        await axios.post(`https://uniconott.onrender.com/api/user/watchlist/remove`, {
           clerkId: user.id,
           movieId: contentId
         });
@@ -64,7 +64,7 @@ const Carousel = () => {
           movieId: contentId,
           email: user.emailAddresses[0]?.emailAddress 
         });
-        await axios.post(`http://localhost:5000/api/user/watchlist/add`, {
+        await axios.post(`https://uniconott.onrender.com/api/user/watchlist/add`, {
           clerkId: user.id,
           movieId: contentId,
           email: user.emailAddresses[0]?.emailAddress

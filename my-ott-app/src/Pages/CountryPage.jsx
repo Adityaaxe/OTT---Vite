@@ -16,7 +16,7 @@ const CountryPage = () => {
         setLoading(true);
 
         const response = await axios.get(
-          `http://localhost:5000/api/countries/${encodedCountryName}`
+          `https://uniconott.onrender.com/api/countries/${encodedCountryName}`
         );
         
         setCountryData(response.data);

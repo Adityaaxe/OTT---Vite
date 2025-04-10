@@ -18,7 +18,7 @@ const Navbar = () => {
 
     if (query.length > 2) { // Only search if input is at least 3 characters
       try {
-        const response = await axios.get(`http://localhost:5000/api/search?query=${query}`);
+        const response = await axios.get(`https://uniconott.onrender.com/api/search?query=${query}`);
         setSearchResults(response.data);
       } catch (error) {
         console.error("Error fetching search results:", error);
