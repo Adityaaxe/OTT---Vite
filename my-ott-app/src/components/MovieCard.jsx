@@ -1,0 +1,53 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
+const MovieCardScroller = () => {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/movies");
+        setMovies(response.data);
+      } catch (error) {
+        console.error("Error fetching movie data:", error);
+      }
+    };
+
+    fetchMovies();
+  }, []);
+
+  return (
+    <div className="overflow-x-auto scroll-smooth py-4 px-4 no-scrollbar">
+      <div className="flex space-x-4 flex-nowrap">
+        {movies.map((movie) => (
+          <Link to={`/watch/${movie._id}`} key={movie._id}>
+            <div className="flex-shrink-0 cursor-pointer">
+              <div className="w-52 h-64 bg-gray-900 rounded-xl shadow-md hover:scale-105 transition-transform overflow-hidden">
+                <img
+                  src={`/Images/${movie.img}`}
+                  alt={movie.title}
+                  className="w-full h-40 object-cover"
+                />
+                <div className="p-3 text-center">
+                  <h3 className="text-lg font-semibold text-white truncate">
+                    {movie.title}
+                  </h3>
+                  <p className="text-gray-400 text-sm">
+                    {movie.genres.length > 0 
+                      ? movie.genres.join(", ") 
+                      : "Unknown Genre"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default MovieCardScroller;
+

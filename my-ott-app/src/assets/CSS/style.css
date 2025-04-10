@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* Hide the horizontal scrollbar */
+.scroll-smooth ::-webkit-scrollbar { 
+  width: 15px; 
+  border: 2px solid blue; 
+} 
+  
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  /* Remove the grey strip (caused by padding/margins) */
+  .overflow-x-auto {
+    background-color: black !important; /* Force black background */
+    padding-bottom: 5 !important; /* Remove extra padding */
+    margin-bottom: -4px; /* Adjust if needed */
+  }
+
+  .glow
+  {
+    transition: 0.6s ease;
+  }
+  
+  .glow:hover
+  {
+      background: #ffffff;
+      color: #000000;
+      border-radius: 50px;
+      box-shadow: 0 0 5px #ffffff,
+              0 0 25px #ffffff,
+              0 0 50px #1f80e0,
+              0 0 100px #1f80e0;	
+  }
+
+  .horizontal-scroll-container {
+    display: flex;
+    overflow-x: auto;  /* ✅ Enables horizontal scrolling */
+    white-space: nowrap;  /* ✅ Prevents wrapping */
+    scrollbar-width: thin; /* 🔹 Makes scrollbar less intrusive */
+    scrollbar-color: #475569 transparent; /* 🔹 Custom scrollbar */
+  }
+  
+  /* 🔹 Optional: Customize scrollbar for Webkit browsers (Chrome, Safari) */
+  .horizontal-scroll-container::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .horizontal-scroll-container::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 4px;
+  }
+  
+  .horizontal-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  
+  .content-card {
+    min-width: 250px;
+    background-color: #1e293b; /* Dark card background */
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  .search-dropdown {
+    position: absolute;
+    max-height: 400px; /* 🔹 Fixed height */
+    overflow-y: auto; /* 🔹 Enables vertical scrollbar */
+    background-color: #0f172a;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  /* 🔹 Scrollbar styling */
+  .search-dropdown::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .search-dropdown::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 4px;
+  }
+  
+  .search-dropdown::-webkit-scrollbar-track {
+    background: #1e293b;
+  }
+  
